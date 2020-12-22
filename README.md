@@ -41,15 +41,15 @@ An example implementation of uploading and downloading/get files from AWS S3. Sa
 
 #### Using AWS Console
    1. Open AWS Console > Lambda > productsmocksavesvc-lambda
-   2. Configure test event. ex: {"productid":"1","productname":"iPhone","productversion":"12"}
+   2. Configure test event. ex: {"productid":"1","productname":"iPhone","productversion":"10R"}
    3. Click Test
    4. Open AWS Console > Lambda > productsmockgetsvc-lambda
-   2. Configure test event. ex: {"productid":"1","productname":"iPhone","productversion":"12"}
+   2. Configure test event. ex: {"productid":"1"}
    3. Click Test
 
 #### Using CLI
 
-$ aws lambda invoke --function-name "productsmocksavesvc-lambda" --cli-binary-format raw-in-base64-out  --payload '{"productId":"1","productName":"iPhone","productVersion":"12"}'  "output.txt"
+$ aws lambda invoke --function-name "productsmocksavesvc-lambda" --cli-binary-format raw-in-base64-out  --payload '{"productId":"1","productName":"iPhone","productVersion":"10R"}'  "output.txt"
 
 $ cat output.txt
 

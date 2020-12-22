@@ -32,8 +32,11 @@ import static org.mockito.Mockito.verify;
 @PrepareForTest({S3Manager.class, DynamoManager.class})
 public class ProductSaveHandlerTest {
 
-  S3Manager s3Manager = Mockito.mock(S3Manager.class);
-  DynamoManager dynamoManager = Mockito.mock(DynamoManager.class);
+  @Mock
+  S3Manager s3Manager;
+
+  @Mock
+  DynamoManager dynamoManager;
   
   private Gson gson;
 
@@ -51,9 +54,12 @@ public class ProductSaveHandlerTest {
     inputProduct.setProductVersion("10R");
 
     MockitoAnnotations.initMocks(this);
-    saveHandler = new ProductSaveHandler(gson, s3Manager, dynamoManager);
-    PowerMockito.when(s3Manager.upload(any(), any(), any())).thenReturn(true);
-    PowerMockito.when(dynamoManager.save(any(), any(), any(), any(), any())).thenReturn(true);
+    PowerMockito.mockStatic(DynamoManager.class);
+    PowerMockito.mockStatic(S3Manager.class);
+    PowerMockito.when(S3Manager.upload(any(), any(), any())).thenReturn(true);
+    PowerMockito.when(DynamoManager.save(any(), any(), any(), any(), any())).thenReturn(true);
+
+    saveHandler = new ProductSaveHandler(gson);
 
   }
 

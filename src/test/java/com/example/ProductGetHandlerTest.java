@@ -35,9 +35,11 @@ import com.google.gson.Gson;
 @PrepareForTest({S3Manager.class, DynamoManager.class})
 public class ProductGetHandlerTest {
 
-  S3Manager s3Manager = Mockito.mock(S3Manager.class);
+  @Mock
+  S3Manager s3Manager;
 
-  DynamoManager dynamoManager = Mockito.mock(DynamoManager.class);
+  @Mock
+  DynamoManager dynamoManager;
 
   Gson gson;
 
@@ -59,10 +61,12 @@ public class ProductGetHandlerTest {
     product.setProductName("iphone");
     product.setProductVersion("10R");
 
-    when(s3Manager.ListObjects(any(), any(), any())).thenReturn(product);
-    when(dynamoManager.get(any(), any(), any())).thenReturn(product);
-
-    getHandler = new ProductGetHandler(gson, s3Manager, dynamoManager);
+    MockitoAnnotations.initMocks(this);
+    PowerMockito.mockStatic(DynamoManager.class);
+    PowerMockito.mockStatic(S3Manager.class);
+    PowerMockito.when(S3Manager.ListObjects(any(), any(), any())).thenReturn(product);
+    PowerMockito.when(DynamoManager.get(any(), any(), any())).thenReturn(product);
+    getHandler = new ProductGetHandler(gson);
   }
 
   @Test

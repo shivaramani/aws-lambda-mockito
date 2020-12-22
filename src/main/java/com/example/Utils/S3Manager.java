@@ -27,10 +27,7 @@ import org.slf4j.LoggerFactory;
 
 public class S3Manager
 {
-    public S3Manager(){
-
-    }
-    public Boolean upload(String clientRegion, String bucketName, Product product) throws IOException {
+    public static Boolean upload(String clientRegion, String bucketName, Product product) throws IOException {
         
         Boolean status = false;
         try {
@@ -56,7 +53,7 @@ public class S3Manager
         return status;
     }
 
-    public Product ListObjects(String clientRegion, String bucketName, String productId)  throws IOException  {
+    public static Product ListObjects(String clientRegion, String bucketName, String productId)  throws IOException  {
         
         Product product = null;
         String key = "";

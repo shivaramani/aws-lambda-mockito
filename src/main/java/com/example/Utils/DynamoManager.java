@@ -27,12 +27,7 @@ import com.google.gson.GsonBuilder;
 
 public  class DynamoManager
 {
-
-    public DynamoManager(){
-
-    }
-
-    public  Boolean save(String clientRegion, String tableName, String productId, String productName, String productVersion ){
+    public static Boolean save(String clientRegion, String tableName, String productId, String productName, String productVersion ){
 
         Boolean status = false;
         if(!StringUtils.isNullOrEmpty(clientRegion)) {
@@ -58,7 +53,7 @@ public  class DynamoManager
         return status;
     }
 
-    public  Product get(String clientRegion, String tableName, String productId){
+    public static Product get(String clientRegion, String tableName, String productId){
         Product product = null;
 
         if(!StringUtils.isNullOrEmpty(clientRegion)) {

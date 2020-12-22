@@ -13,16 +13,11 @@ import java.io.IOException;
 
 public class ProductSaveHandler{
   Gson gson;
-  S3Manager s3Manager;
-  DynamoManager dynamoManager;
   static Logger logger = LoggerFactory.getLogger(ProductSaveHandler.class);
 
   @Inject
-  public ProductSaveHandler(Gson gson, S3Manager s3Manager, DynamoManager dynamoManager){
-
+  public ProductSaveHandler(Gson gson){
     this.gson = gson;
-    this.s3Manager = s3Manager;
-    this.dynamoManager = dynamoManager;
   }
 
   public String handleRequest(Product request) throws ProductHandlerException {
@@ -43,9 +38,9 @@ public class ProductSaveHandler{
         String productVersion = request.getProductVersion();
 
         try {
-          Boolean s3UploadStatus = s3Manager.upload(region, bucketName, request);
+          Boolean s3UploadStatus = S3Manager.upload(region, bucketName, request);
           if(s3UploadStatus){
-            dynamoManager.save(region, dynamoTable, productId, productName, productVersion);
+            DynamoManager.save(region, dynamoTable, productId, productName, productVersion);
           }
           else{
             throw new ProductHandlerException("Error saving products");

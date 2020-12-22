@@ -1,0 +1,6 @@
+.idea
+target/
+templates/.terraform/
+templates/*.tfstate
+output.txt
+productsmocksvc.iml

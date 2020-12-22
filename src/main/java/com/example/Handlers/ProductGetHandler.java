@@ -22,10 +22,8 @@ public class ProductGetHandler{
   static Logger logger = LoggerFactory.getLogger(ProductGetHandler.class);
 
   @Inject
-  public ProductGetHandler(Gson gson, S3Manager s3Manager, DynamoManager dynamoManager){
+  public ProductGetHandler(Gson gson){
       this.gson = gson;
-      this.s3Manager = s3Manager;
-      this.dynamoManager = dynamoManager;
   }
 
   public String handleRequest(Product request)  throws ProductHandlerException{
@@ -42,12 +40,11 @@ public class ProductGetHandler{
         String productId = request.getProductId();
         try {
 
-          Product product = s3Manager.ListObjects(region, bucketName, productId);
+          Product product = S3Manager.ListObjects(region, bucketName, productId);
           logger.info("S3 fetch done");
           if(product != null && product.getProductId() != null){
               logger.info("getting ddb");
-              //product = DynamoManager.get(region, dynamoTable, productId);
-              product = getTableData(region, dynamoTable, productId);
+              product = DynamoManager.get(region, dynamoTable, productId);
               logger.info("ddb fetch done");
               output = gson.toJson(product);
               logger.info("ddb json - " + output);
@@ -72,10 +69,5 @@ public class ProductGetHandler{
       }
 
       return  output ;
-  }
-
-  private Product getTableData(String region, String dynamoTable, String productId){
-      Product product = dynamoManager.get(region, dynamoTable, productId);
-      return product;
   }
 }

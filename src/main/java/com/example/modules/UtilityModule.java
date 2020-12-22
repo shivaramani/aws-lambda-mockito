@@ -21,6 +21,8 @@ public class UtilityModule {
         return new GsonBuilder().setPrettyPrinting().create();
     }
 
+    // Having static methods, Otherwise we can DI these also!
+    /*
     @Provides
     @Singleton
     public S3Manager providesS3Manager() {
@@ -32,6 +34,6 @@ public class UtilityModule {
     public DynamoManager providesDynamoManager() {
         return new DynamoManager();
     }
-
+    */
 
 }
